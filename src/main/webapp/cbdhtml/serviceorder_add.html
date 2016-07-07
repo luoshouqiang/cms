@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>车必达</title>
+<script src="../js/jquery.min.js?v=20150807"></script>
+<script src="../js/jquery.cookie.js?v=20150807"></script>
+<script src="../js/common.js?v=20150807"></script>
+<script src="../js/json2.js?v=20150807"></script>
+<script src="../js/jquery.validate.js?v=20150807"></script>
+<script src="../js/validate.js?v=20150807"></script>
+<script src="../js/My97DatePicker/WdatePicker.js?v=20150807"></script>
+<script src="js/serviceorder_add.js?v=20150807"></script>
+<link href="../style/base.css?v=20150807" rel="stylesheet" type="text/css">
+<link href="../style/style.css?v=20150807" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="header">
+    <div class="header-b  w">
+		<div class="logo"><img src="../images/logo.png" alt="车必达"></div>
+    </div>
+</div>
+<div class="container w mt-20">
+    <div class="lframe bg-gray">
+        <ul class="nav">
+             <li class="nav-list active"><a href="javascript:void(0);" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加服务订单</a></li>
+        </ul>
+    </div>
+    <div class="rframe">
+         <div class="rframe-title parking-add-title"><h3 class="title-h3-a">添加服务订单</h3></div>
+        <div class="mk-02">
+            <div class="mk-02-box">
+                <div class="mk-02-b">
+                    <form name="serviceorderAddForm" id="serviceorder-add-form" class="form-inline" method="post"  action="">
+                        <div class="row">
+                            <div class="form-group col-5  fl">
+                                <label class="fl" style="margin-top:5px">订单数量：</label>
+                                <input type="text" value="" id="order-number" class="form-control" name="orderNumber">
+                            </div>
+                            <div class="form-group col-5  fr">
+                                <label class="fl" style="margin-top:5px">下单时间：</label>
+                                <input type="text" value="" id="order-time" class="form-control" name="orderTime" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-5  fl">
+                                <label class="fl" style="margin-top:5px">可重复下单天数：</label>
+                                <input type="text" value="" id="days" class="form-control" name="days">
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <p class="mt-55"><input type="submit" value="添加" class="btn btn-135 btn-yellow fr"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-box mt-35">
+            <h3 class="title-h3-a">搜索结果</h3>
+            <div class="export-excel"><!--<a href="/cms/serverOrder/download">导出excel</a>--></div>
+            <table class="table-a mt-20" cellpadding="0" cellspacing="0">
+        		<tr>
+                    <th class="ta-l order-no ord-sort" width="9%" ordway="order_id" direction="ASC"><span>订单编号<i class="icon-arrow-up"></i></span></th>
+                    <th width="8%">订单类型</th>
+                    <th width="8%">小区名称</th>
+                    <th width="8%">用户名</th>
+                    <th width="8%">电话号码</th>           
+                    <th width="8%">车牌号</th>
+                    <th width="8%" class="order-data ord-sort" ordway="created_time" direction="NOSORT"><span>下单时间<i class="icon-arrow-updown"></i></th>
+                   <!-- <th width="10%" class="order-data ord-sort" ordway="serv_start_time" direction="NOSORT"><span>服务开始时间<i class="icon-arrow-updown"></i></th>
+                    <th width="10%" class="order-data ord-sort" ordway="serv_end_time" direction="NOSORT"><span>服务结束时间<i class="icon-arrow-updown"></th>-->
+                    <th width="8%">订单状态</th>
+                 <th  class="ta-r" width="10%">操作</th>
+                </tr>
+                <tbody id="table-a-list">
+            	
+              
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+<div class="clear"></div>
+<div class="footer">
+    <div class="footer-box w">
+         <span class="copyright">
+             <p>- Copyright &#169; 2015 成都车必达科技有限公司版权所有 -</p>
+             <a href="http://www.miitbeian.gov.cn"  class="filing-number">蜀ICP备15014752号-2</a>
+        </span>
+        <span class="footer-logo"><img src="../images/footer_logo.png"></span>
+    </div>
+</div>
+
+
+<!--确认缴费弹框开始-->
+<div class="tk-bg"></div>
+<div class="tk tk-mk-03 tk-more-serviceord overflow-h">
+	<h3 class="title-h3-a">服务订单详情</h3>
+        <div class="uo-b-row "> 
+             <div class="main" id="tk-moreserviceord-main">
+             	<div class="row">
+                    <p class="col-6"><strong>订单编号：</strong><span></span></p>
+                    <p class="col-6"><strong>订单类型：</strong><span></span></p>
+                </div>
+                <div class="row">
+                    <p class="col-6"><strong>用户姓名：</strong><span></span></p>
+                    <p class="col-6"><strong>电话号码：</strong><span></span></p>
+                </div>
+                <div class="row">
+                    <p class="col-6"><strong>车牌号：</strong><span></span></p>
+                    <p class="col-6"><strong>下单时间：</strong><span></span></p>
+                </div>
+                <div class="row">
+                    <p class="col-6"><strong>服务开始时间：</strong><span></span></p>
+                    <p class="col-6"><strong>服务结束时间：</strong><span></span></p>
+                </div>
+                 <div class="row">
+                    <p class="col-6"><strong>订单状态：</strong><span></span></p>
+                    <p class="col-6"><strong>订单价格：</strong><span></span></p>
+                </div>
+                 <div class="row">
+                    <p class="col-6"><strong>车位号：</strong><span></span></p>
+                </div>
+                  <div class="row row-remark">
+                    <p class="col-12"><strong class="col-2">备注信息：</strong>
+                    <span class="col-10">asd阿阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬斯顿发送到发送到阿斯顿发斯蒂芬</span>
+                    </p>
+                </div>
+                <div class="main-bg"></div>
+             </div>
+             <div class="tkbtn">
+           <!-- <a href="javascript:void(0);" class="btn btn-135 quxiao" id="quxiao-ownparking" >取消</a>-->
+            <a href="javascript:void(0);" class="btn btn-135 btn-yellow ml-20 "  id="service-ord-ok" style="margin-left:80px">确定</a>
+            </div>
+        </div>
+</div>
+<!--确认缴费弹框结束--
+
+</body>
+</html>

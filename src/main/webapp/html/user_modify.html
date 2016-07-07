@@ -1,0 +1,494 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>用户修改</title>
+<script src="../js/jquery.min.js?v=20150917"></script>
+<script src="../js/jquery.cookie.js?v=20150917"></script>
+<script src="../js/common.js?v=20150917"></script>
+<script src="../js/json2.js?v=20150917"></script>
+<script src="../js/jquery.validate.js?v=20150917"></script>
+<script src="../js/validate.js?v=20150917"></script>
+<script src="../js/ajaxfileupload.js?v=20150917"></script>
+<script src="../js/My97DatePicker/WdatePicker.js"></script>
+<script src="../js/carInfo.js?v=20150917"></script>
+<script src="../js/user_modify.js?v=20150917"></script>
+<script src="../js/change_number.js?v=20150917"></script>
+<link href="../style/base.css?v=20150917" rel="stylesheet" type="text/css">
+<link href="../style/style.css?v=20150917" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="header">
+    <div class="header-b  w">
+		<div class="logo"><img src="../images/logo.png" alt="车必达"></div>
+    </div>
+</div>
+<div class="container w mt-20">
+    <div class="lframe bg-gray">
+        <ul class="nav">
+             <li class="nav-list active"><a href="/cms/html/user_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>用户数据查询</a></li>
+             <li class="nav-list"><a href="/cms/html/user_relation.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加用户关联</a></li>
+             <li class="nav-list"><a href="/cms/html/user_serviceOrder.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>服务订单查询</a></li>  
+             <li class="nav-list"><a href="/cms/html/parking_add.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加车位</a></li> 
+              <li class="nav-list"><a href="/cms/html/auditdrivinglicense.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核行驶证</a></li>  
+             <li class="nav-list"><a href="/cms/html/insurancequalification.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核保险资质</a></li>        
+             <li class="nav-list">
+             	<a href="javascript:void(0);" class="nav-list-a btn btn-213" data="0"><i class="icon-nav"></i>初始化小区信息</a>
+                <ul class="nav-sub" style="display:none;">
+                	 <li class="nav-sub-list"><a href="/cms/html/area_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav"></i>初始化小区</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/parkinglots_add.html" class="nav-sub-list-abtn btn-213"><i class="icon-nav"></i>初始化停车场信息</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/standarparking_add.html" class="nav-sub-list-abtn btn-213"><i class="icon-nav"></i>初始化标准车位</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/propertyaccount_add.html" class="nav-sub-list-abtn btn-213"><i class="icon-nav"></i>初始化物业账号</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/virtualparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化物业车位</a></li>
+                    <li class="nav-sub-list"><a href="/cms/html/operationparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化运营车位</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/gateway_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化闸道口</a></li>
+                </ul>
+             </li>
+              <li class="nav-list"><a href="/cms/html/insur_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险/套餐用户</a></li>       
+             <li class="nav-list"><a href="/cms/html/package_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>套餐包订单</a></li>
+             <li class="nav-list"><a href="/cms/html/insur_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险订单</a></li>    
+             <li class="nav-list"><a href="/cms/html/messagePush.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>消息推送</a></li>           
+        </ul>
+    </div>
+    <div class="rframe">
+        <div class="modifyprogress"><img src="../images/modify_progress_03.png"></div>
+        <div class="user-search-box user-modify-box">
+            <div class="search-condition">
+                <div class="sc-b">
+                    <form name="searchform"  id="searchform"  class="form-inline" method="post"  action="">
+                        <div class="row">
+                          <div class="form-group col-5 fl"><label>用户姓名：</label><input type="text" value="" id="userName" class="form-control" name="userName" readonly ></div>
+                          <div class="form-group col-5 fr"><label>电话号码：</label><input type="text" value="" id="phoneNum" class="form-control" name="phoneNum" readonly ></div>
+                        </div>
+                     <div class="row p-0">
+                          <div class="form-group form-group-select col-5 fl"><label>小区名字：</label>
+                                    <select id="areaName" class="form-control " name="areaName">    
+ 
+                                    </select>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="table-box mt-35">
+            <h3 class="title-h3-a">搜索结果</h3>
+            <table class="table-a modify-table mt-20" cellpadding="0" cellspacing="0">
+        		<tr>
+                    <th width="10%" class="ta-l">用户名</th>
+                    <th width="10%">电话号码</th>
+                     <th width="8%">房号</th>
+                    <th width="8%">停车场</th>
+                    <th width="8%">车位号</th>
+                    <th width="8%">车位类型</th>
+                    <th width="8%">拥有方式</th>
+                    <th width="8%">车牌号</th>
+                    <th width="10%">车位到期时间</th>
+                    <th width="10%">记录修改时间</th>
+                    <th width="8%" class="ta-r">车辆属性</th>
+                </tr>
+                <tbody id="table-a-list">
+            	
+                </tbody>
+            </table>
+            <div class="page">
+              
+            </div>
+        </div>
+        <div class="user-operate">
+            <div class="um-btn">
+                 <a href="javascript:void(0);" class="btn btn-135 btn-yellow btn-yellow-shadow " id="addcar"><i class="icon-car-add"></i>增加车辆</a>
+                <!-- <a href="javascript:void(0);" class="btn btn-135 btn-gray btn-gray-shadow ml-20"><i class="icon-car-del"></i>删除车辆</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="footer">
+    <div class="footer-box w">
+         <span class="copyright">
+             <p>- Copyright &#169; 2015 成都车必达科技有限公司版权所有 -</p>
+             <a href="http://www.miitbeian.gov.cn"  class="filing-number">蜀ICP备15014752号-2</a>
+        </span>
+        <span class="footer-logo"><img src="../images/footer_logo.png"></span>
+    </div>
+</div>
+<!--弹框-->
+<div class="tk-bg"></div>
+<div class="tk tk_carno">
+	<h3 class="title-h3-a">车牌号修改</h3>
+         <div class="row">         
+           <div class=""><label>车牌号码：</label>
+		  <!-- <input type="text" value="" id="changephoneNum" name="changephoneNum" readonly >-->
+		    <select id="selectCarno" name="selectCarno">
+				
+			</select>
+		   </div>
+        </div>
+        <div class="tkbtn">
+            <a href="javascript:void(0);" class="btn btn-135 quxiao" id="quxiao" >取消</a>
+            <a href="javascript:void(0);" class="btn btn-135 btn-yellow ml-20"  id="changecarno_ok">确定</a>
+        </div>
+</div>
+<!--到期时间修改-->
+<div class="tk tk_date">
+	<h3 class="title-h3-a">到期时间修改</h3>
+         <div class="row" style="margin-left:30px; margin-top:20px;">         
+           <div class=" col-5 fl"><label>车位号：</label>
+           <input type="text" value="" id="plateno_date" name="plateno_date" readonly style="width:120px;" ></div>
+             <div class=" col-5 fl ml-20"><label>到期时间：</label>
+             <input type="text" value="" id="changeduedate" name="changeduedate" readonly style="width:120px;"></div>
+        </div>
+        <div class="row" style="margin-top:0px; margin-left:45px;">         
+           <div class=""><label>修改时间：</label>
+           <input type="text" class="changedate" id="changedate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+         
+        </div>
+        <div class="tkbtn" style="margin-top:45px; margin-left:60px;">
+            <a href="javascript:void(0);" class="btn btn-135 quxiao" id="quxiao-date">取消</a>
+            <a href="javascript:void(0);" class="btn btn-135 btn-yellow ml-20" id="changedate-ok">确定</a>
+        </div>
+</div>
+</div>
+<!--修改用户名-->
+<div class="tk tk_username">
+	<h3 class="title-h3-a">用户名修改</h3>
+         <div class="row">         
+           <div class=""><label>用户名：</label>
+		   <input type="text" value="" id="change-username" name="changeUsername" >
+		   </div>
+        </div>
+        <div class="tkbtn">
+            <a href="javascript:void(0);" class="btn btn-135 quxiao " id="quxiao-username" >取消</a>
+            <a href="javascript:void(0);" class="btn btn-135 btn-yellow ml-20"  id="change-username-ok">确定</a>
+        </div>
+</div>
+<!--修改车位类型-->
+<div class="tk tk-parkingspace">
+	<h3 class="title-h3-a">修改车位类型</h3>
+         <div class="row">         
+           <div class=""><label>车位类型：</label>
+		    <select id="select-parkingspace" name="selectparkingSpace">
+                  <option value="人防车位">人防车位</option>
+                  <option value="标准">标准车位</option>
+                  <option value="豪华">豪华车位</option>
+                  <option value="小型">小型车位</option>
+                  <option value="子母">子母车位</option>
+                  <option value="虚拟">虚拟车位</option>
+                  <option value="普通车位">普通车位</option>     
+			</select>
+		   </div>
+        </div>
+        <div class="tkbtn">
+            <a href="javascript:void(0);" class="btn btn-135 quxiao" id="quxiao-parkingspace" >取消</a>
+            <a href="javascript:void(0);" class="btn btn-135 btn-yellow ml-20"  id="change-space-ok">确定</a>
+        </div>
+</div>
+
+<!--修改用户名-->
+<div class="tk tk-mk-04 tk-roomNo">
+	<h3 class="title-h3-a">房号修改</h3>
+    <form name="changeRoomNoform" id="change-roomNo-form" class="form-inline" method="post"  action="">
+         <div class="row">         
+           <div class=""><label>房号：</label>
+		   <input type="text" value="" id="change-roomNo" name="changeRoomNo" >
+		   </div>
+        </div>
+        <div class="tkbtn" style="margin-top:50px;">
+            <a href="javascript:void(0);" class="btn btn-135 quxiao " id="quxiao-roomNo" >取消</a>
+            <input type="submit" class="btn btn-135 btn-yellow ml-20"  id="change-roomNo-ok" value="确定"/>
+        </div>
+    </form>
+</div>
+
+<!--增加车辆-->
+ <!--<div class="user-operate-b mk-01 tk-addcar" flag="0">
+     <i class="tk-close icon-close-gray" id="tk-addcar-close"></i>
+        <form class="form-inline" id="add-car-form" name="addCarForm">
+        <div class="uo-b mt-20">
+         <div class="uo-b-row">
+         <div class="row who-car" style="display:none;">
+          <label class="fl">车辆所有：</label>
+            <div class="checkbox fl" data="0" userid="">
+                <span><i class="icon-checkbox carown" data="0"></i>自有车辆</span>
+                <span class="ml-45"><i class="icon-uncheckbox carown" data="1"></i>朋友车辆</span>
+            </div>
+         </div>
+          <div class="row">
+                <div class="form-group col-6">
+                    <label>车牌号：</label><input type="text" value="" id="platNo" class="form-control" name="platNo" >
+                </div>
+                <div class="form-group form-group-select col-6 fr"><label>车辆品牌：</label>
+                    <select id="carBrand" class="form-control" name="carBrand">
+                        
+                    </select>
+                </div>
+          </div>
+         <div class="row p-0">
+               <div class="form-group form-group-select col-6"><label>车系：</label>
+                    <select id="carSeries" class="form-control" name="carSeries">  
+                    </select>
+              </div>
+                <div class="form-group form-group-select col-6 fr"><label>车型：</label>
+                    <select id="carModels" class="form-control" name="carModels">
+                    </select>
+              </div>
+          </div>
+           <div class="displacement">
+           <label class="fl">排量：</label>
+                <div class="num num-a fl">
+                    <a href="javascript:void(0);" onClick="$.add(this)" class="num-plus-a">+</a>
+                        <input type="text" value="0" id="payTimea" onBlur="$.modify(this)" class="num-number-a" name="payTimea" datamax="5" datamin="0">
+                    <a href="javascript:void(0);" onClick="$.reduce(this)" class="num-min-a" >-</a>
+                 </div> 
+                 <div class="point">.</div>
+                  <div class="num num-b fl">
+                    <a href="javascript:void(0);" onClick="$.add(this)" class="num-plus-b">+</a>
+                        <input type="text" value="0" id="payTime-b" onBlur="$.modify(this)" class="num-number-b" name="payTimeb" datamax="9" datamin="0">
+                     <a href="javascript:void(0);" onClick="$.reduce(this)" class="num-min-b">-</a>
+                 </div> 
+           </div>
+           <div class="photo">
+              <label class="fl">行驶证照片：</label>
+              <div class="input-file-box fl">
+                  <input type="hidden" id="registration-hidden">
+                <input type="file" class="input-file" id="registration" name="registration" value=""/>
+                <span><img src="../images/jiahao.png"></span>
+              </div>
+              <div class="clear"></div>
+              <div class="pic-box"><img src="" id="xsz-img"></div>
+           </div>
+        </div>
+           <div class="uo-b-text">
+              <p>如果以上内容都没有，请自己填写车辆信息</p>
+                <textarea cols="75" class="form-control" id="otherInfo"></textarea>
+                <input type="submit" value="提交"  data="" class="btn btn-135 btn-yellow mt-20 submit-btn" id="addcarbtn"/>
+           </div>
+           
+       </div>
+       </form>
+ </div>-->
+
+<!-- <div class="user-operate-b mk-01 tk-addcar" flag="0">
+     <i class="tk-close icon-close-gray" id="tk-addcar-close"></i>
+        <form class="form-inline" id="add-car-form" name="addCarForm">
+        <div class="uo-b mt-20">
+         <div class="uo-b-row">
+         <div class="row who-car" style="display:none;">
+          <label class="fl">车辆所有：</label>
+            <div class="checkbox fl" data="0" userid="">
+                <span><i class="icon-checkbox carown" data="0"></i>自有车辆</span>
+                <span class="ml-45"><i class="icon-uncheckbox carown" data="1"></i>朋友车辆</span>
+            </div>
+         </div>
+           <div class="photo">
+              <label class="fl">行驶证照片：</label>
+              <div class="input-file-box fl">
+                  <input type="hidden" id="registration-hidden">
+                <input type="file" class="input-file" id="registration" name="registration" value=""/>
+                <span><img src="../images/jiahao.png"></span>
+              </div>
+              <div class="clear"></div>
+              <div class="pic-box"><img src="../images/xsz_1.jpg" id="xsz-img"></div>
+           </div>
+        </div>-->
+        <!-- <div class="uo-b-text">
+            <p>如果没有行驶证，请自己填写车辆信息</p>
+              <textarea cols="75" class="form-control" id="otherInfo"></textarea>
+              <input type="submit" value="提交"  data="" class="btn btn-135 btn-yellow mt-20 submit-btn" id="addcarbtn"/>
+         </div>-->
+         <!--<div class="uo-b-text">
+          <a href="javascript:void(0);"  data="" class="btn btn-135 btn-yellow mt-20 submit-btn" id="addcarbtn">确定</a> 
+          </div>
+       </div>
+       </form>
+ </div>-->
+
+ <div class="user-operate-b mk-01 tk-addcar" flag="0">
+     <i class="tk-close icon-close-gray" id="tk-addcar-close"></i>
+        <form class="form-inline" id="add-car-form" name="addCarForm">
+        <div class="uo-b mt-20">
+         <div class="uo-b-row">
+         <h3>上传行驶证</h3>
+         <!--<div class="text">
+                <div class="photo col-6 fl">
+                  <label class="fl">正本：</label>
+                  <div class="input-file-box fl">
+                      <input type="hidden" id="registration-hidden">
+                    <input type="file" class="input-file" id="registration" name="registration" value=""/>
+                    <span><img src="../images/jiahao.png"></span>
+                  </div>
+                  <div class="clear"></div>
+                  <div class="pic-box"><img src="../images/xsz_1.jpg" id="xsz-img"></div>
+                </div>
+           </div>-->
+         <div class="tab">
+            <div class="tab-title" id="tab-title" datatype="VL_ORI">
+                <ul>
+                    <li class="active" datatype="VL_ORI"><a href="javascript:void(0);">正本</a></li>
+                    <li datatype="VL_CPY_A"><a href="javascript:void(0);">副本</a></li>
+                    <li datatype="VL_CPY_B"><a href="javascript:void(0);">副本反面</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+            <div class="tab-text" id="tab-text">
+              <!--正本开始-->
+              <div class="text">
+                <div class="photo fl">
+                  <label class="fl">正本：</label>
+                  <div class="input-file-box fl">
+                      <input type="hidden" id="registration-hidden">
+                    <input type="file" class="input-file" id="registrationzb" name="registrationzb" value=""/>
+                    <span><img src="../images/jiahao.png"></span>
+                  </div>
+                  <div class="clear"></div>
+                  <div class="pic-box"><img src="../images/xsz_1.jpg" id="xsz-zb-img" class="xsz-img"/></div>
+                </div>
+              </div>
+              <!--正本结束-->
+              <!--副本开始-->
+              <div class="text" style="display:none;">
+                <div class="photo fl">
+                  <label class="fl">副本：</label>
+                  <div class="input-file-box fl">
+                      <input type="hidden" id="registration-hidden">
+                    <input type="file" class="input-file" id="registrationfb" name="registrationfb" value=""/>
+                    <span><img src="../images/jiahao.png"></span>
+                  </div>
+                  <div class="clear"></div>
+                  <div class="pic-box"><img src="../images/xsz_1.jpg" id="xsz-fb-img"  class="xsz-img"></div>
+                </div>
+              </div>
+              <!--副本结束-->
+              <!--副本反面开始-->
+              <div class="text" style="display:none;">
+                <div class="photo  fl">
+                  <label class="fl">副本反面：</label>
+                  <div class="input-file-box fl">
+                      <input type="hidden" id="registration-hidden">
+                    <input type="file" class="input-file" id="registrationfbfm" name="registrationfbfm" value=""/>
+                    <span><img src="../images/jiahao.png"></span>
+                  </div>
+                  <div class="clear"></div>
+                  <div class="pic-box"><img src="../images/xsz_1.jpg" id="xsz-fbfm-img"  class="xsz-img"></div>
+                </div>
+              </div>
+              <!--副本反面结束-->
+            </div>
+         </div>
+         <div class="clear"></div>
+          <h3 class="mt-10">录入信息</h3>
+           <div class="row">
+                <div class="form-group col-6 fl">
+                    <label>车牌号：</label><input type="text" value="" id="platNo" class="form-control agree" name="platNo" >
+                </div>
+                <div class="form-group form-group-select col-6 fr"><label>车辆类型：</label>
+                    <select id="vehicleType" class="form-control agree" name="vehicleType">
+                        <option value="小型轿车">小型轿车</option>>
+                    </select>
+                </div>
+          </div>
+         <div class="row">
+                <div class="form-group col-6 fl"><label>所有人：</label>
+                   <input type="text" value="" id="owner" class="form-control agree" name="owner" >
+              </div>
+                 <div class="form-group  col-6 fr"><label>住址：</label>
+                     <input type="text" value="" id="address" class="form-control agree" name="address" >
+              </div>
+          </div>
+          <div class="clear"></div>
+            <div class="row">
+                <div class="form-group form-group-select col-6 fl"><label>使用性质：</label>
+                    <select id="useCharacter" class="form-control agree" name="useCharacter">
+                        <option value="非营运">非营运</option>
+                    </select>
+                </div>
+                 <div class="form-group  col-6 fr"><label>品牌型号：</label>
+                     <input type="text" value="" id="model" class="form-control agree" name="model" >
+              </div>
+          </div>
+           <div class="row">
+                <div class="form-group  col-6 fl"><label>车辆代号：</label>
+                    <input type="text" value="" id="vin" class="form-control agree" name="vin" >
+                </div>
+                 <div class="form-group  col-6 fr"><label>发动机号：</label>
+                     <input type="text" value="" id="engineNo" class="form-control agree" name="engineNo"/>
+              </div>
+          </div>
+          <div class="row">
+                <div class="form-group  col-6 fl"><label>注册日期：</label>
+                     <input type="text" class=" form-control registerDate agree" id="registerDate" name="registerDate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+                </div>
+                 <div class="form-group  col-6 fr"><label>发证日期：</label>
+                     <input type="text" class=" form-control issueDate agree" id="issueDate" name="issueDate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+              </div>
+          </div>
+           <!--<div class="row">
+                <div class="form-group form-group-select col-6 fl"><label>车辆品牌：</label>
+                    <select id="carBrand" class="form-control agree" name="carBrand">
+                        
+                    </select>
+                </div>
+                  <div class="form-group form-group-select col-6 fr"><label>车系：</label>
+                    <select id="carSeries" class="form-control agree" name="carSeries">  
+                    </select>
+              </div>
+          </div>
+           <div class="row">
+                
+                <div class="form-group form-group-select col-6 fl"><label>车型：</label>
+                    <select id="carModels" class="form-control agree" name="carModels">
+                    </select>
+              </div>
+          </div>-->
+        </div>
+        <!-- <div class="uo-b-text">
+            <p>如果没有行驶证，请自己填写车辆信息</p>
+              <textarea cols="75" class="form-control" id="otherInfo"></textarea>
+              <input type="submit" value="提交"  data="" class="btn btn-135 btn-yellow mt-20 submit-btn" id="addcarbtn"/>
+         </div>-->
+         <div class="uo-b-text">
+           <input type="submit" value="提交" class="btn btn-135 btn-yellow mt-20 submit-btn fr" id="addcarbtn" />
+          </div>
+       </div>
+       </form>
+ </div>
+
+ <!--查看车辆属性开始-->
+<div class="tk  tk-car-info overflow-h">
+  <h3 class="title-h3-a">车辆信息</h3>
+        <div class="uo-b-row "> 
+             <div class="main" id="tk-carinfo-main">
+              <div class="row">
+                    <p class="col-6"><strong class="col-5">车牌号：</strong><span></span></p>
+                    <p class="col-6"><strong class="col-5">车辆品牌：</strong><span></span></p>
+                </div>
+                <div class="row">
+                    <p class="col-6"><strong class="col-5">车系：</strong><span></span></p>
+                    <p class="col-6"><strong class="col-5">车型：</strong><span></span></p>
+                </div>
+                <div class="row">
+                    <p class="col-6"><strong class="col-5">排量：</strong><span></span></p>
+                </div>
+                <!-- <div class="row">
+                    <p class="col-10 row-xsz"><strong class="col-3" style="">行驶证：</strong><span><img src="../images/xsz.png"></span></p>
+                </div>-->
+                  <div class="row row-remark">
+                    <p class="col-10"><strong class="col-3">备注：</strong>
+                    <span class="col-9">asd阿阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬阿斯顿发送到发送到阿斯顿发斯蒂芬斯顿发送到发送到阿斯顿发斯蒂芬</span>
+                    </p>
+                </div>
+                <div class="main-bg"></div>
+             </div>
+             <div class="tkbtn">
+           <!-- <a href="javascript:void(0);" class="btn btn-135 quxiao" id="quxiao-ownparking" >取消</a>-->
+            <a href="javascript:void(0);" class="btn btn-135 btn-yellow ml-20 "  id="tk-carinfo-ok" style="margin-left:80px">确定</a>
+            </div>
+        </div>
+</div>
+  <!--查看车辆属性结束-->
+</body>
+</html>

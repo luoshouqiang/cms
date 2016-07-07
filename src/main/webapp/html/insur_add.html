@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>添加保险订单</title>
+<script src="../js/jquery.min.js?v=20150917"></script>
+<script src="../js/jquery.cookie.js?v=20150917"></script>
+<script src="../js/common.js?v=20150917"></script>
+<script src="../js/json2.js?v=20150917"></script>
+<script src="../js/jquery.validate.js?v=20150917"></script>
+<script src="../js/validate.js?v=20150917"></script>
+<script src="../js/insur_add.js?v=20150917"></script>
+<link href="../style/base.css?v=20150917" rel="stylesheet" type="text/css">
+<link href="../style/style.css?v=20150917" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="header">
+    <div class="header-b  w">
+		<div class="logo"><img src="../images/logo.png" alt="车必达"></div>
+    </div>
+</div>
+<div class="container w mt-20">
+    <div class="lframe bg-gray">
+        <ul class="nav">
+             <li class="nav-list"><a href="/cms/html/user_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>用户数据查询</a></li>
+             <li class="nav-list"><a href="/cms/html/user_relation.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加用户关联</a></li>
+             <li class="nav-list"><a href="/cms/html/user_serviceOrder.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>服务订单查询</a></li>   
+             <li class="nav-list"><a href="/cms/html/parking_add.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加车位</a></li>  
+             <li class="nav-list"><a href="/cms/html/auditdrivinglicense.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核行驶证</a></li>  
+             <li class="nav-list"><a href="/cms/html/insurancequalification.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核保险资质</a></li>    
+             <li class="nav-list">
+             	<a href="javascript:void(0);" class="nav-list-a btn btn-213" data="1"><i class="icon-nav-down"></i>初始化小区信息</a>
+                <ul class="nav-sub" style="display: none">
+                	 <li class="nav-sub-list active"><a href="/cms/html/area_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化小区</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/parkinglots_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化停车场信息</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/standarparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化标准车位</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/propertyaccount_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化物业账号</a></li>
+                    <li class="nav-sub-list"><a href="/cms/html/virtualparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化物业车位</a></li>
+                    <li class="nav-sub-list"><a href="/cms/html/operationparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化运营车位</a></li>
+                    <li class="nav-sub-list"><a href="/cms/html/gateway_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化闸道口</a></li>
+                </ul>
+             </li>
+              <li class="nav-list  active"><a href="/cms/html/insur_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险/套餐用户</a></li>       
+             <li class="nav-list"><a href="/cms/html/package_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>套餐包订单</a></li> 
+             <li class="nav-list"><a href="/cms/html/insur_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险订单</a></li>      
+              <li class="nav-list"><a href="/cms/html/messagePush.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>消息推送</a></li>   
+        </ul>
+    </div>
+    <div class="rframe">
+         <div class="rframe-title parking-add-title"><h3 class="title-h3-a">增加保险</h3></div>
+        <div class="mk-02">
+            <div class="mk-02-box">
+                <div class="mk-02-b">
+                    <form name="areaAddForm" id="area-add-form" class="form-inline" method="post"  action="">
+                        <div class="row p-0">
+                             <!--<div class="form-group col-5  fl">
+                            <label class="fl" style="margin-top:5px">用户名称：</label>
+                            <input type="text" value="" id="contact" class="form-control" name="userName">
+                            </div>-->
+                            <div class="form-group col-5  fl">
+                            <label class="fl" style="margin-top:5px">保险名称：</label>
+                            <input type="text" value="" id="insur-name" class="form-control" name="insurName">
+                            </div>
+                           <div class="form-group col-5  fr">
+                            <label class="fl" style="margin-top:5px">保险价格：</label>
+                            <input type="text" value="" id="insur-price" class="form-control" name="insurPrice">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-10 form-group-textarea  fl"><label class="fl">保险内容：</label>
+                              <textarea cols="26" rows="5"  class="form-control" id="insur-desc" name="insurDesc"></textarea>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <p class="mt-25"><input type="submit" value="添加" class="btn btn-135 btn-yellow fr submit-btn"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="footer">
+    <div class="footer-box w">
+         <span class="copyright">
+             <p>- Copyright &#169; 2015 成都车必达科技有限公司版权所有 -</p>
+             <a href="http://www.miitbeian.gov.cn"  class="filing-number">蜀ICP备15014752号-2</a>
+        </span>
+        <span class="footer-logo"><img src="../images/footer_logo.png"></span>
+    </div>
+</div>
+</body>
+</html>

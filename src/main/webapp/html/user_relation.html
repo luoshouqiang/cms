@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>用户关联</title>
+<script src="../js/jquery.min.js?v=20150917"></script>
+<script src="../js/jquery.cookie.js?v=20150917"></script>
+<script src="../js/placeholder.js?v=20150917"></script>
+<script src="../js/common.js?v=20150917"></script>
+<script src="../js/json2.js?v=20150917"></script>
+<script src="../js/jquery.validate.js?v=20150917"></script>
+<script src="../js/validate.js?v=20150917"></script>
+<script src="../js/user_relation.js?v=20150917"></script>
+<link href="../style/base.css?v=20150917" rel="stylesheet" type="text/css">
+<link href="../style/style.css?v=20150917" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="header">
+    <div class="header-b  w">
+		<div class="logo"><img src="../images/logo.png" alt="车必达"></div>
+    </div>
+</div>
+<div class="container w mt-20">
+    <div class="lframe bg-gray">
+        <ul class="nav">
+             <li class="nav-list"><a href="/cms/html/user_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>用户数据查询</a></li>
+             <li class="nav-list active"><a href="/cms/html/user_relation.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加用户关联</a></li>
+             <li class="nav-list"><a href="/cms/html/user_serviceOrder.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>服务订单查询</a></li>   
+             <li class="nav-list"><a href="/cms/html/parking_add.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加车位</a></li> 
+              <li class="nav-list"><a href="/cms/html/auditdrivinglicense.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核行驶证</a></li>  
+             <li class="nav-list"><a href="/cms/html/insurancequalification.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核保险资质</a></li>       
+             <li class="nav-list">
+             	<a href="javascript:void(0);" class="nav-list-a btn btn-213" data="0"><i class="icon-nav"></i>初始化小区信息</a>
+                <ul class="nav-sub" style=" display:none;">
+                	 <li class="nav-sub-list"><a href="/cms/html/area_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化小区</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/parkinglots_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化停车场信息</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/standarparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化标准车位</a></li>
+                     
+                     <li class="nav-sub-list"><a href="/cms/html/propertyaccount_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化物业账号</a></li>
+                    <li class="nav-sub-list"><a href="/cms/html/virtualparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化物业车位</a></li>
+                    <li class="nav-sub-list"><a href="/cms/html/operationparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化运营车位</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/gateway_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化闸道口</a></li>
+                </ul>
+             </li>
+              <li class="nav-list"><a href="/cms/html/insur_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险/套餐用户</a></li>       
+             <li class="nav-list"><a href="/cms/html/package_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>套餐包订单</a></li>
+             <li class="nav-list"><a href="/cms/html/insur_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险订单</a></li> 
+             <li class="nav-list"><a href="/cms/html/messagePush.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>消息推送</a></li>              
+        </ul>
+    </div>
+    <div class="rframe">
+        <div class="searchprogress"><img src="../images/add_user_2.png"></div>
+        <div class="user-search-box user-relation-box">
+            <div class="search-condition">
+                <div class="sc-b">
+                    <form name="searchform" id="searchform" class="form-inline" method="post" action="">
+                        <div class="row p-0">
+                          <div class="form-group form-group-select col-5 fl"><label>小区名字：</label>
+                                    <select id="areaName" class="form-control" name="areaName">
+                                    </select>
+                          </div>
+                          <div class="form-group col-5 fr"><label>车位号：</label><input type="text" value="" id="parkingLot" class="form-control" name="parkingLot"></div>
+                        </div>
+                        <input type="text" style="display:none"><!--避免按enter提交-->
+                        <p class="mt-25"><a href="javascript:void(0);" class="btn btn-135 btn-yellow fr submit-btn"  id="parkingSearch"></a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="table-box mt-35 overflow-hidden">
+            <h3 class="title-h3-a">搜索结果</h3>
+            <table class="table-a user-add-table mt-20" cellpadding="0" cellspacing="0">
+        		<tr>
+                    <th width="10%">用户名</th>
+                    <th width="15%">电话号码</th>
+                     <th width="8%">房号</th>
+                    <th width="8%">停车场</th>
+                    <th width="8%">车位号</th>
+                    <th width="8%">车位类型</th>
+                    <th width="8%">拥有方式</th>
+                    <th width="8%">车牌号</th>
+                    <th  width="10%">车位到期时间</th>
+                    <th  class="ta-r" width="8%">操作</th>
+                </tr>
+                <tbody id="table-a-list">
+            		
+                </tbody>
+            </table>
+              <div class="page">
+                
+            </div>
+        </div>           
+    </div>
+</div>
+<div class="clear"></div>
+<div class="footer">
+    <div class="footer-box w">
+         <span class="copyright">
+             <p>- Copyright &#169; 2015 成都车必达科技有限公司版权所有 -</p>
+             <a href="http://www.miitbeian.gov.cn"  class="filing-number">蜀ICP备15014752号-2</a>
+        </span>
+        <span class="footer-logo"><img src="../images/footer_logo.png"></span>
+    </div>
+</div>
+
+
+<!--用户关联弹框开始-->
+<div class="tk-bg"></div>
+<div class="tk tk-mk-01 mk-user-relation overflow-h dispaly-none">
+    <i class="tk-close icon-close-gray" id="mkuserrelation-close"></i>
+	<h3 class="title-h3-a">添加用户关联</h3>
+      <form class="form-inline" id="userrelation" method="post"  action="/">
+       <div class="uo-b mt-20">
+    <div class="user-operate-b" style="">
+       <div class="uo-b-row">
+        	<div class="row">
+                 <div class="form-group col-6"><label>车位号：</label><input type="text" value="" id="parkingNo" class="form-control form-control-onlyread" name="parkingNo" readonly ></div>
+                 <div class="form-group col-6"><label><i>*</i>房号：</label><input type="text" value="" id="roomNo" class="form-control" name="roomNo" ></div>
+            </div>
+            <div class="row">
+                 <div class="form-group col-6">
+                 <label><i>*</i>电话号码：</label><input type="text" value="" placeholder="输入多个手机号时用逗号隔开" id="phoneNum" class="form-control" name="phoneNum" >
+                </div>
+                 <div class="form-group col-6">
+                  <label>身份证号：</label><input type="text" value="" id="idNo" class="form-control" name="idNo" >
+                 </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+              <label><i>*</i>用户名：</label><input type="text" value="" id="userName" class="form-control" name="userName" ><strong class="tip error"></strong></div>
+                 <div class="form-group col-6">
+                  <label>拥有方式：</label>
+                   <!--<select id="add-selectOwnway" class="form-control" name="add-selectOwnway">-->
+                    <select id="relation-selectOwnway" class="form-control ownway" name="relation-selectOwnway">
+                       
+                    </select>
+                </div>
+            </div>
+                   
+               <input class="btn btn-135 btn-yellow mt-20 fr" id="relationcarbtn" type="submit" value="提交"/>
+       </div>
+      </div>
+      </div>
+      </form>
+</div>
+	
+<!--用户关联弹框结束-->
+
+
+
+<!--弹框-->
+<div class="tk tk_ownway" >
+	<h3 class="title-h3-a">车位拥有方式修改</h3>
+         <div class="row">         
+           <div class=""><label>拥有方式：</label>
+		  <!-- <input type="text" value="" id="changephoneNum" name="changephoneNum" readonly >-->
+		     <select id="selectOwnway" name="selectOwnway" class="ownway">
+				<option>选择拥有方式</option>
+				
+			</select>
+            
+		   </div>
+        </div>
+        <div class="tkbtn">
+            <a href="javascript:void(0);" class="btn btn-135 quxiao" id="quxiao" >取消</a>
+            <a href="javascript:void(0);" class="btn btn-135 btn-yellow ml-20"  id="changeownway-ok">确定</a>
+        </div>
+</div>
+
+<!--用户已经存在车位的情况弹出框确认-->
+<div class="tk tk_ownparking overflow-h">
+	<h3 class="title-h3-a">已存在的用户，为用户添加一个车位？</h3>
+        <div class="uo-b-row"> 
+            <div class="row">
+               <div class="form-group"><label>用户名：</label><input type="text" value="" id="uName" class="form-control" name="uName" ></div>
+            </div>
+            <div class="row" style="margin-top:0px;">
+               <div class="form-group"><label>电话号码：</label><input type="text" value="" id="pNum" class="form-control" name="pNum" ></div>
+            </div>
+             <div class="tkbtn">
+            <a href="javascript:void(0);" class="btn btn-135 quxiao" id="quxiao-ownparking" >取消</a>
+            <a href="javascript:void(0);" class="btn btn-135 btn-yellow ml-20"  id="updateuser-ok">确定</a>
+            </div>
+        </div>
+       
+</div>
+</body>
+</html>

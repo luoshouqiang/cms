@@ -1,0 +1,360 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>审核行驶证</title>
+<script src="../js/jquery.min.js?v=20150917"></script>
+<script src="../js/jquery.cookie.js?v=20150917"></script>
+<script src="../js/common.js?v=20150917"></script>
+<script src="../js/json2.js?v=20150917"></script>
+<script src="../js/jquery.validate.js?v=20150917"></script>
+<script src="../js/validate.js?v=20150917"></script>
+<script src="../js/carInfo.js?v=20150917"></script>
+<script src="../js/insurancequalification.js?v=20150917"></script>
+<script src="../js/My97DatePicker/WdatePicker.js?v=20150917"></script>
+<link href="../style/base.css?v=20150917" rel="stylesheet" type="text/css">
+<link href="../style/style.css?v=20150917" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="header">
+    <div class="header-b  w">
+    <div class="logo"><img src="../images/logo.png" alt="车必达"></div>
+    </div>
+</div>
+<div class="container w mt-20">
+    <div class="lframe bg-gray">
+        <ul class="nav">
+             <li class="nav-list"><a href="/cms/html/user_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>用户数据查询</a></li>
+             <li class="nav-list"><a href="/cms/html/user_relation.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加用户关联</a></li>
+             <li class="nav-list"><a href="/cms/html/user_serviceOrder.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>服务订单查询</a></li>   
+             <li class="nav-list"><a href="/cms/html/parking_add.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加车位</a></li>  
+             <li class="nav-list"><a href="/cms/html/auditdrivinglicense.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核行驶证</a></li>  
+             <li class="nav-list active"><a href="/cms/html/insurancequalification.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核保险资质</a></li>  
+             <li class="nav-list">
+              <a href="javascript:void(0);" class="nav-list-a btn btn-213" data="0"><i class="icon-nav"></i>初始化小区信息</a>
+                <ul class="nav-sub" style=" display:none;">
+                   <li class="nav-sub-list"><a href="/cms/html/area_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化小区</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/parkinglots_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化停车场信息</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/standarparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化标准车位</a></li>
+                     
+                     <li class="nav-sub-list"><a href="/cms/html/propertyaccount_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化物业账号</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/virtualparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化物业车位</a></li>
+                    <li class="nav-sub-list"><a href="/cms/html/operationparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化运营车位</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/gateway_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化闸道口</a></li>
+                </ul>
+             </li>
+              <li class="nav-list"><a href="/cms/html/insur_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险/套餐用户</a></li>       
+             <li class="nav-list"><a href="/cms/html/package_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>套餐包订单</a></li>
+             <li class="nav-list"><a href="/cms/html/insur_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险订单</a></li>  
+              <li class="nav-list"><a href="/cms/html/messagePush.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>消息推送</a></li>            
+        </ul>
+    </div>
+    <div class="rframe">
+         <div class="rframe-title parking-add-title"><h3 class="title-h3-a">审核行驶证</h3></div>
+        <div class="user-search-box">
+            <div class="search-condition">
+                <div class="sc-b">
+                    <form name="auditDrivingLicForm" id="auditDrivingLicForm" class="form-inline" method="post"  action="">
+                        <div class="row">
+                          <div class="form-group col-5 fl"><label>用户姓名：</label><input type="text" value="" id="userName" class="form-control" name="userName"></div>
+                          <div class="form-group col-5 fr"><label>电话号码：</label><input type="text" value="" id="phoneNum" class="form-control" name="phoneNum"></div>
+                        </div>
+                          <div class="row p-0">
+                         <!-- <div class="form-group col-5  fl"><label class="fl pt-5">审核对象：</label> 
+                          <select id="auditobj" class="form-control form-group-select fl" name="auditobj">
+                            <option value="1">手机端上传</option>
+                            <option value="2">物业端上传</option>
+                        </select>
+                        </div>-->
+                          <div class="form-group col-5  fl"><label class="fl pt-5">审核状态：</label> 
+                          <select id="status" class="form-control form-group-select" name="status">
+                            <option value="NEW">待审核</option>
+                            <option value="NOPASS">未通过</option>
+                            <option value="PASS">已通过</option>
+                        </select>
+                        </div>
+                        </div>
+                        <p class="mt-25"><input type="submit" value="" class="btn btn-135 btn-yellow fr submit-btn" id="auditSearch"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-box mt-35" style="overflow: visible;">
+            <h3 class="title-h3-a">审核列表</h3>
+            <table class="table-a mt-20 auddrivelic-table" cellpadding="0" cellspacing="0">
+            <tr>
+                    <th width="15%" class="ta-l">用户名</th>
+                    <th width="15%">电话号码</th>
+                     <th width="15%">行驶证</th>
+                    <th width="10%">状态</th>
+                    <th width="10%" class="ta-r">审核</th>
+                </tr>
+                <tbody id="table-a-list">
+              
+              
+                </tbody>
+            </table>
+             <div class="page" style="margin-bottom: 10px;">
+                
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div class="clear"></div>
+<div class="footer">
+    <div class="footer-box w">
+         <span class="copyright">
+             <p>- Copyright &#169; 2015 成都车必达科技有限公司版权所有 -</p>
+             <a href="http://www.miitbeian.gov.cn"  class="filing-number">蜀ICP备15014752号-2</a>
+        </span>
+        <span class="footer-logo"><img src="../images/footer_logo.png"></span>
+    </div>
+</div>
+<div class="tk-bg"></div>
+ <!--审核行驶证 手机端-->
+<div class="user-operate-b mk-01 tk-audDrivinglic tk-audPhoneDrivinglic" flag="0">
+     <i class="tk-close icon-close-gray" id="tk-audPhoneDrivinglic-close"></i>
+        <div class="uo-b" style="padding-top: 1px;">
+       <!--<div class="photobox dri-photobox">
+    <div id="slideBoxPhone" class="slideBox">
+        <div class="hd"></div>
+      <div class="bd">
+        <ul>
+          <li>
+            <div class="photo photo-checkbox fl col-6">
+                    <div class="checkinput-box checkinput-box-sfsh">
+                     <span class="check-title">选中审核：</span>
+                       <form>
+                       <span class="check-input"><input type="checkbox" name="sfsh" value="" /><em>审核</em></span>
+                       </form>
+                     </div>
+                      <div class="clear"></div>
+                     <div class="pic-box"><img src="aa" class="audit-xszimg"></div>
+                     <div class="clear"></div>
+                     <div class="checkinput-box checkinput-box-xsz">
+                     <span class="check-title">选正副本：</span>
+                       <form>
+                       <span class="check-input"><input type="radio" name="xszsh" value="VL_ORI" checked="checked" /><em>正本</em></span>
+                       <span class="check-input"><input type="radio" name="xszsh" value="VL_CPY_A"/><em>副本</em></span>
+                       <span class="check-input"><input type="radio" name="xszsh" value="VL_CPY_B"/><em>副本反面</em></span>
+                       </form>
+                     </div>
+                      <div class="checkinput-box checkinput-box-wt">
+                     <span class="check-title">是否通过：</span>
+                       <form>
+                       <span class="check-input"><input type="radio" name="xszwt" value="PASS" checked="checked"/><em>通过</em></span>
+                       <span class="check-input"><input type="radio" name="xszwt" value="NOPASS"/><em>不通过</em></span>
+                        <span class="check-input"><input type="radio" name="xszwt" value="DEL"/><em>删除</em></span>
+                       </form>
+                     </div>
+                  </div>
+          </li>
+        </ul>
+      </div>
+        <a class="prev" href="javascript:void(0)"></a>
+        <a class="next" href="javascript:void(0)"></a>
+    </div>
+        </div>-->
+        <div class="photobox dri-photobox">
+    <div id="slideBoxPhone" class="slideBox">
+        <div class="hd"></div>
+      <div class="bd">
+        <ul>
+          <li>
+             <div class="photo photo-checkbox fl col-6">
+                     <div class="pic-box"><img src="aa" class="audit-xszimg"></div>
+                  </div>
+          </li>
+        </ul>
+      </div>
+        <a class="prev" href="javascript:void(0)"></a>
+        <a class="next" href="javascript:void(0)"></a>
+    </div>
+        </div>
+        <div class="clear"></div>
+         <div class="uo-b-row">
+          <form class="form-inline" id="auditForm" name="auditForm">
+           <div class="row who-car">
+              <label class="fl">是否同意：</label>
+                <div class="checkbox fl" data="1">
+                    <span><i class="icon-checkbox auditchoice" data="1"></i>同意通过</span>
+                    <span class="ml-45"><i class="icon-uncheckbox auditchoice" data="0"></i>不同意通过</span>
+                </div>
+          </div>
+          <div class="pc-box">
+            <div class="row">
+                  <div class="form-group col-6 fl">
+                      <label>车牌号：</label><input type="text" value="" id="platNo" class="form-control agree" name="platNo" >
+                  </div>
+                  <div class="form-group form-group-select col-6 fr"><label>车辆类型：</label>
+                      <select id="vehicleType" class="form-control agree" name="vehicleType">
+                          <option value="小型轿车">小型轿车</option>>
+                      </select>
+                  </div>
+            </div>
+           <div class="row">
+                  <div class="form-group col-6 fl"><label>所有人：</label>
+                     <input type="text" value="" id="owner" class="form-control agree" name="owner" >
+                </div>
+                   <div class="form-group  col-6 fr"><label>住址：</label>
+                       <input type="text" value="" id="address" class="form-control agree" name="address" >
+                </div>
+            </div>
+            <div class="clear"></div>
+              <div class="row">
+                  <div class="form-group form-group-select col-6 fl"><label>使用性质：</label>
+                      <select id="useCharacter" class="form-control agree" name="useCharacter">
+                          <option value="非营运">非营运</option>>
+                      </select>
+                  </div>
+                   <div class="form-group  col-6 fr"><label>品牌型号：</label>
+                       <input type="text" value="" id="model" class="form-control agree" name="model" >
+                </div>
+            </div>
+             <div class="row">
+                  <div class="form-group  col-6 fl"><label>车辆代号：</label>
+                      <input type="text" value="" id="vin" class="form-control agree" name="vin" >
+                  </div>
+                   <div class="form-group  col-6 fr"><label>发动机号：</label>
+                       <input type="text" value="" id="engineNo" class="form-control agree" name="engineNo"/>
+                </div>
+            </div>
+            <div class="row">
+                  <div class="form-group  col-6 fl"><label>注册日期：</label>
+                       <input type="text" class=" form-control registerDate agree" id="registerDate" name="registerDate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+                  </div>
+                   <div class="form-group  col-6 fr"><label>发证日期：</label>
+                       <input type="text" class=" form-control issueDate agree" id="issueDate" name="issueDate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+                </div>
+            </div>
+             <div class="row">
+                  <div class="form-group form-group-select col-6 fl"><label>车辆品牌：</label>
+                      <select id="carBrand" class="form-control agree" name="carBrand">
+                          
+                      </select>
+                  </div>
+                    <div class="form-group form-group-select col-6 fr"><label>车系：</label>
+                      <select id="carSeries" class="form-control agree" name="carSeries">  
+                      </select>
+                </div>
+            </div>
+             <div class="row">
+                  
+                  <div class="form-group form-group-select col-6 fl"><label>车型：</label>
+                      <select id="carModels" class="form-control agree" name="carModels">
+                      </select>
+                </div>
+            </div>
+          </div>
+             <div class="uo-b-text">
+              <p>如果审核不通过,请填写不通过原因</p>
+                <textarea cols="75" row="5" class="form-control disagree" id="disagree" disabled name="disagree"></textarea>
+                <div><input type="submit" class="btn btn-135 btn-yellow mt-20 fr submit-btn" id="auditbtn" status="PASS" value="提交"/></div>
+           </div>
+            </form>
+        </div> 
+       </div>
+ </div>
+
+
+ <!--审核行驶证 物业端-->
+<div class="user-operate-b mk-01 tk-audDrivinglic tk-audPcDrivinglic" flag="0">
+     <i class="tk-close icon-close-gray" id="tk-audPcDrivinglic-close"></i>
+        <div class="uo-b">
+        <div class="photobox dri-photobox">
+    <div id="slideBoxPc" class="slideBox">
+        <div class="hd"></div>
+      <div class="bd">
+        <ul>
+          <li>
+             <div class="photo photo-checkbox fl col-6">
+                     <div class="pic-box"><img src="aa" class="audit-xszimg"></div>
+                  </div>
+          </li>
+        </ul>
+      </div>
+        <a class="prev" href="javascript:void(0)"></a>
+        <a class="next" href="javascript:void(0)"></a>
+    </div>
+        </div>
+  
+
+         <div class="uo-b-row">
+          <form class="form-inline" id="pcauditForm" name="pcauditForm">
+           <div class="row who-car">
+              <label class="fl">是否同意：</label>
+                <div class="checkbox fl" data="1">
+                    <span><i class="icon-checkbox pcauditchoice" data="1"></i>同意通过</span>
+                    <span class="ml-45"><i class="icon-uncheckbox pcauditchoice" data="0"></i>不同意通过</span>
+                </div>
+          </div>
+            <div class="row">
+                  <div class="form-group col-6 fl">
+                      <label>车牌号：</label><input type="text" value="" id="pcplatNo" class="form-control pcagree" name="pcplatNo" >
+                  </div>
+                  <div class="form-group form-group-select col-6 fr"><label>车辆类型：</label>
+                      <input type="text" value="" id="pcvehicleType" class="form-control pcagree" name="pcvehicleType" >
+                  </div>
+            </div>
+           <div class="row">
+                  <div class="form-group col-6 fl"><label>所有人：</label>
+                     <input type="text" value="" id="pcowner" class="form-control pcagree" name="pcowner" >
+                </div>
+                   <div class="form-group  col-6 fr"><label>住址：</label>
+                       <input type="text" value="" id="pcaddress" class="form-control pcagree" name="pcpcaddress" >
+                </div>
+            </div>
+            <div class="clear"></div>
+              <div class="row">
+                  <div class="form-group form-group-select col-6 fl"><label>使用性质：</label>
+                      <input type="text" value="" id="pcuseCharacter" class="form-control pcagree" name="pcuseCharacter" >
+                  </div>
+                   <div class="form-group  col-6 fr"><label>品牌型号：</label>
+                       <input type="text" value="" id="pcmodel" class="form-control pcagree" name="pcmodel" >
+                </div>
+            </div>
+             <div class="row">
+                  <div class="form-group  col-6 fl"><label>车辆代号：</label>
+                      <input type="text" value="" id="pcvin" class="form-control pcagree" name="pcvin" >
+                  </div>
+                   <div class="form-group  col-6 fr"><label>发动机号：</label>
+                       <input type="text" value="" id="pcengineNo" class="form-control pcagree" name="pcengineNo"/>
+                </div>
+            </div>
+            <div class="row">
+                  <div class="form-group  col-6 fl"><label>注册日期：</label>
+                       <input type="text" class=" form-control pcregisterDate pcagree" id="pcregisterDate" name="pcregisterDate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+                  </div>
+                   <div class="form-group  col-6 fr"><label>发证日期：</label>
+                       <input type="text" class=" form-control pcissueDate pcagree" id="pcissueDate" name="pcissueDate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+                </div>
+            </div>
+            <!-- <div class="row">
+                  <div class="form-group  col-6 fl"><label>车辆品牌：</label>
+                      <input type="text" value="" id="pccarBrand" class="form-control pcagree" name="pccarBrand" >
+                  </div>
+                    <div class="form-group  col-6 fr"><label>车系：</label>
+                      <input type="text" value="" id="pccarSeries" class="form-control pcagree" name="pccarSeries" >
+                </div>
+            </div>
+             <div class="row">
+                  <div class="form-group  col-6 fl"><label>车型：</label>
+                       <input type="text" value="" id="pccarModels" class="form-control pcagree" name="pccarModels" >
+                </div>
+            </div>-->
+             <div class="uo-b-text">
+              <p>如果审核不通过,请填写不通过原因</p>
+                <textarea cols="75" row="5" class="form-control pcdisagree" id="pcdisagree" disabled name="pcdisagree"></textarea>
+                <div><input type="submit" class="btn btn-135 btn-yellow mt-20 fr submit-btn" id="pcauditbtn" status="PASS" value="提交"/></div>
+           </div>
+            </form>
+        </div> 
+       </div>
+ </div>
+ <script src="../js/jquery.SuperSlide.2.1.1.js"></script>
+ <script src="../js/jquery.imagezoom.js?v=20150917"></script>
+</body>
+</html>

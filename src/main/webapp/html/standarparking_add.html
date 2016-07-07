@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>初始化标准车位</title>
+<script src="../js/jquery.min.js?v=20150917"></script>
+<script src="../js/jquery.cookie.js?v=20150917"></script>
+<script src="../js/common.js?v=20150917"></script>
+<script src="../js/json2.js?v=20150917"></script>
+<script src="../js/jquery.validate.js?v=20150917"></script>
+<script src="../js/validate.js?v=20150917"></script>
+<script src="../js/standarparking_add.js?v=20150917"></script>
+<link href="../style/base.css?v=20150917" rel="stylesheet" type="text/css">
+<link href="../style/style.css?v=20150917" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="header">
+    <div class="header-b  w">
+		<div class="logo"><img src="../images/logo.png" alt="车必达"></div>
+    </div>
+</div>
+<div class="container w mt-20">
+    <div class="lframe bg-gray">
+        <ul class="nav">
+             <li class="nav-list"><a href="/cms/html/user_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>用户数据查询</a></li>
+             <li class="nav-list"><a href="/cms/html/user_relation.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加用户关联</a></li>
+             <li class="nav-list"><a href="/cms/html/user_serviceOrder.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>服务订单查询</a></li>   
+             <li class="nav-list"><a href="/cms/html/parking_add.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>添加车位</a></li>
+              <li class="nav-list"><a href="/cms/html/auditdrivinglicense.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核行驶证</a></li>  
+             <li class="nav-list"><a href="/cms/html/insurancequalification.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>审核保险资质</a></li>        
+             <li class="nav-list active">
+             	<a href="javascript:void(0);" class="nav-list-a btn btn-213" data="1"><i class="icon-nav-down"></i>初始化小区信息</a>
+                <ul class="nav-sub">
+                	 <li class="nav-sub-list"><a href="/cms/html/area_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化小区</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/parkinglots_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化停车场信息</a></li>
+                     <li class="nav-sub-list active"><a href="/cms/html/standarparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化标准车位</a></li>
+                     
+                     <li class="nav-sub-list"><a href="/cms/html/propertyaccount_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化物业账号</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/virtualparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化物业车位</a></li>
+                    <li class="nav-sub-list"><a href="/cms/html/operationparking_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化运营车位</a></li>
+                     <li class="nav-sub-list"><a href="/cms/html/gateway_add.html" class="nav-sub-list-a btn btn-213"><i class="icon-nav-circle"></i>初始化闸道口</a></li>
+                </ul>
+             </li>
+              <li class="nav-list"><a href="/cms/html/insur_search.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险/套餐用户</a></li>       
+             <li class="nav-list"><a href="/cms/html/package_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>套餐包订单</a></li>
+             <li class="nav-list"><a href="/cms/html/insur_order.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>保险订单</a></li>
+             <li class="nav-list"><a href="/cms/html/messagePush.html" class="nav-list-a btn btn-213"><i class="icon-nav"></i>消息推送</a></li>               
+        </ul>
+    </div>
+    <div class="rframe">
+         <div class="rframe-title parking-add-title"><h3 class="title-h3-a">初始化标准车位</h3></div>
+        <div class="mk-02">
+            <div class="mk-02-box">
+                <div class="mk-02-b">
+                    <form name="standerparkingAddForm" id="standerparking-add-form" class="form-inline" method="post"  action="">
+                        <div class="row p-0">
+                           <div class="form-group form-group-select col-5 fl"><label>小区名字：</label>
+                                    <select id="areaName" class="form-control" name="areaName">
+                                      
+                                    </select>
+                          </div>
+                           <div class="form-group form-group-select col-5 fr"><label>停车场：</label>
+                            <select id="parking-lots-id" class="form-control" name="parkingLotsId">
+                             
+                            
+                            </select>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group form-group-select col-5 fl"><label>车位楼层：</label>
+                            <select id="parking-floor" class="form-control" name="parkingFloor">
+                              <option value="">请选择</option>
+                              <option value="2">二楼</option>
+                              <option value="1">一楼</option>
+                              <option value="0">地面</option>
+                               <option value="-1">负一楼</option>
+                              <option value="-2">负二楼</option>
+                              <option value="-3">负三楼</option>
+                            </select>
+                        </div>
+                         <div class="form-group col-5  fr">
+                            <label class="fl" style="margin-top:5px">车位前缀：</label>
+                            <input type="text" value="" id="parking-prefix" class="form-control" name="parkingPrefix">
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-5  fl">
+                                <label class="fl" style="margin-top:5px">起始编号：</label>
+                                <input type="text" value="" id="start-number" class="form-control" name="startNumber">
+                            </div>
+                            <div class="form-group col-5  fr">
+                                <label class="fl" style="margin-top:5px">停车位数量：</label>
+                                <input type="text" value="" id="parking-number" class="form-control" name="parkingNumber">
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <p class="mt-55"><input type="submit" value="添加" class="btn btn-135 btn-yellow fr submit-btn"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-box mt-35 overflow-hidden">
+            <h3 class="title-h3-a">标准车位列表</h3>
+            <table class="table-a mt-20" cellpadding="0" cellspacing="0">
+        		<tr>
+                    <th width="15%" class="ta-l">小区名称</th>
+                    <th width="15%">停车场</th>
+                    <th width="15%">车位楼层</th>
+                    <th width="15%">车位号</th>
+                    <th width="15%" class="ta-r">车位类型</th>
+                </tr>
+                <tbody id="table-a-list">
+            	
+              
+                </tbody>
+            </table>
+             <div class="page">
+                
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div class="clear"></div>
+<div class="footer">
+    <div class="footer-box w">
+         <span class="copyright">
+             <p>- Copyright &#169; 2015 成都车必达科技有限公司版权所有 -</p>
+             <a href="http://www.miitbeian.gov.cn"  class="filing-number">蜀ICP备15014752号-2</a>
+        </span>
+        <span class="footer-logo"><img src="../images/footer_logo.png"></span>
+    </div>
+</div>
+</body>
+</html>
